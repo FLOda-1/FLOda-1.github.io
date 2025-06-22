@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FLOda</title>
   <body>
     <h1><em><marquee><u>Willkommen!</u></marquee></em></h1>
     <p>wähle eine aktivität aus:</p>
