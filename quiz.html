@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz-Spiel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .score {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .question-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button.answer {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #ddd;
+      transition: background-color 0.3s;
+    }
+
+    button.answer:hover {
+      background-color: #ccc;
+    }
+
+    .end-screen {
+      font-size: 20px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    #restart {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #restart:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="score">Punkte: <span id="score">0</span></div>
+
+  <div class="question-container" id="quiz-container">
+    <div class="question" id="question">Frage kommt hier...</div>
+    <div class="answers" id="answers">
+      <!-- Antwort-Buttons kommen hier -->
+    </div>
+  </div>
+
+  <div class="end-screen" id="end-screen" style="display: none;">
+    <div id="final-score"></div>
+    <button id="restart">Nochmal spielen</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Was ist 2 + 2?",
+        answers: ["3", "4", "5", "6"],
+        correct: "4"
+      },
+      {
+        question: "Welche Farbe hat der Himmel?",
+        answers: ["Blau", "Grün", "Gelb", "Rot"],
+        correct: "Blau"
+      },
+      {
+        question: "Was ist die Hauptstadt von Deutschland?",
+        answers: ["Berlin", "München", "Köln", "Hamburg"],
+        correct: "Berlin"
+      },
+      {
+        question: "Wie viele Beine hat eine Spinne?",
+        answers: ["6", "8", "4", "10"],
+        correct: "8"
+      },
+      {
+        question: "Was ist 10 - 4?",
+        answers: ["5", "4", "6", "3"],
+        correct: "6"
+      },
+      {
+        question: "Welcher Planet ist der Sonne am nächsten?",
+        answers: ["Erde", "Venus", "Mars", "Merkur"],
+        correct: "Merkur"
+      },
+      {
+        question: "Wie viele Kontinente gibt es?",
+        answers: ["5", "6", "7", "8"],
+        correct: "7"
+      },
+      {
+        question: "Was trinkt eine Kuh?",
+        answers: ["Milch", "Wasser", "Bier", "Saft"],
+        correct: "Wasser"
+      },
+      {
+        question: "Wie nennt man eingefrorenes Wasser?",
+        answers: ["Eis", "Dampf", "Gas", "Wolke"],
+        correct: "Eis"
+      },
+      {
+        question: "Wie viele Tage hat eine Woche?",
+        answers: ["5", "6", "7", "8"],
+        correct: "7"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const scoreEl = document.getElementById("score");
+    const quizContainer = document.getElementById("quiz-container");
+    const endScreen = document.getElementById("end-screen");
+    const finalScoreEl = document.getElementById("final-score");
+    const restartBtn = document.getElementById("restart");
+
+    function showQuestion() {
+      if (currentQuestion >= 10) {
+        endQuiz();
+        return;
+      }
+
+      const q = questions[currentQuestion];
+      questionEl.textContent = q.question;
+
+      answersEl.innerHTML = "";
+      shuffleArray(q.answers).forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.classList.add("answer");
+        btn.addEventListener("click", () => selectAnswer(answer, q.correct));
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(answer, correct) {
+      if (answer === correct) {
+        score++;
+      } else {
+        score--;
+      }
+      scoreEl.textContent = score;
+      currentQuestion++;
+      showQuestion();
+    }
+
+    function endQuiz() {
+      quizContainer.style.display = "none";
+      endScreen.style.display = "block";
+      finalScoreEl.textContent = `Du hast ${score} von 10 Punkten geschafft`;
+    }
+
+    function restartQuiz() {
+      score = 0;
+      currentQuestion = 0;
+      scoreEl.textContent = score;
+      quizContainer.style.display = "block";
+      endScreen.style.display = "none";
+      shuffleArray(questions);
+      showQuestion();
+    }
+
+    function shuffleArray(arr) {
+      return arr.slice().sort(() => Math.random() - 0.5);
+    }
+
+    restartBtn.addEventListener("click", restartQuiz);
+
+    shuffleArray(questions);
+    showQuestion();
+  </script>
+  <a href="index.html">Zurück</a>
+</body>
+</html>
