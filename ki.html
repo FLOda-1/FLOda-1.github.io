@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLOda</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: black;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 20px;
+      border: 2px solid cyan;
+      border-radius: 10px;
+      box-shadow: 0 0 20px cyan;
+      background-color: black;
+    }
+
+    h1 {
+      text-align: center;
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+    }
+
+    #chat {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid cyan;
+      padding: 10px;
+      margin-bottom: 10px;
+      color: cyan;
+      background-color: #111;
+      border-radius: 5px;
+    }
+
+    input, button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input {
+      width: 75%;
+      background-color: black;
+      color: cyan;
+      border: 1px solid cyan;
+    }
+
+    button {
+      width: 20%;
+      background-color: cyan;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px cyan;
+    }
+
+    .user-message {
+      color: cyan;
+      margin-bottom: 5px;
+    }
+
+    .bot-message {
+      color: cyan;
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
+    
+    .zuruck {
+      color: black;
+      background-color: turquoise;
+      padding: 10px;
+      box-shadow: 2px 4px 22px 8px rgba(36,255,247,0.75);
+    }
+    
+    .infom {
+      color: black;
+      background-color: turquoise;
+      padding: 10px;
+      box-shadow: 2px 4px 22px 8px rgba(36,255,247,0.75);
+    }
+    
+    .tabelle {
+      color: turquoise;
+      padding: 10px;
+    }
+    
+    .tabele {
+      color: black;
+      background-color: turquoise;
+      padding: 10px;
+      box-shadow: 2px 4px 22px 8px rgba(36,255,247,0.75);
+    }
+  </style>
+</head>
+<p class="infom">Diese KI <em><u>(FLOChat)</u></em> kann nicht auf alles antworten, deshalb gibt diese tabelle was alles der KI verstehen kann (bitte schreibe die satzt/frage genau so wie in der  tabelle ist)</p>
+<h2 class="tabelle">Tabelle was du der KI fragen kannst:</h2>
+<li class="tabele">Hallo</li>
+<li class="tabele">Wie geht es dir?</li>
+<li class="tabele">Was ist dein Name?</li>
+<li class="tabele">Wer hat dich entwickelt?</li>
+<li class="tabele">Was ist FLOda?</li>
+<li class="tabele">Welche Sprache kannst du reden?</li>
+<li class="tabele">Tschüss</li>
+<h2 class="tabelle">Scroll runter zum Chat</h2>
+<body>
+  <div class="container">
+    <h1>FLOChat</h1>
+    <div id="chat"></div>
+    <input type="text" id="userInput" placeholder="Schreib etwas..." />
+    <button onclick="sendMessage()">Senden</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const userInput = document.getElementById("userInput");
+      const chat = document.getElementById("chat");
+      const userText = userInput.value.trim();
+      if (userText === "") return;
+
+      const userMessage = document.createElement("div");
+      userMessage.className = "user-message";
+      userMessage.textContent = "Du: " + userText;
+      chat.appendChild(userMessage);
+
+      const botMessage = document.createElement("div");
+      botMessage.className = "bot-message";
+      botMessage.textContent = "KI: " + getBotResponse(userText);
+      chat.appendChild(botMessage);
+
+      chat.scrollTop = chat.scrollHeight;
+
+      userInput.value = "";
+    }
+    
+    function getBotResponse(input) {
+  input = input.trim();
+
+  if (input === "Hallo") {
+    return "Hallo! Wie kann ich dir helfen?";
+  } else if (input === "Wie geht es dir?") {
+    return "Mir geht's gut, danke der Nachfrage!";
+  } else if (input === "Was ist dein Name?") {
+    return "Ich heiße FLOChat";
+  } else if (input === "Wer hat dich entwickelt?") {
+    return "Florian Buda Alex hat mich entwickelt";
+  } else if (input === "Tschüss") {
+    return "Auf Wiedersehen!";
+  } else if (input === "Was ist FLOda?") {
+    return "FLOda ist ein Unternehmen, das Webseiten wie diese programmiert.";
+  } else if (input === "Welche Sprache kannst du reden?") {
+    return "Ich kann leider nur Deutsch";
+  } else {
+    return "Das habe ich leider nicht verstanden.";
+  }
+}
+</script>
+  <a class=zuruck href="index.html">Zurück</a>
+</body>
+</html>
